@@ -3,6 +3,22 @@ body {
     color: #212529;
 }
 
+/* Réduction de la taille des liens de la navbar */
+.navbar-nav .nav-link {
+    font-size: 0.95rem; /* Un tout petit peu plus petit que la taille par défaut */
+    font-weight: 500;
+}
+
+/* Réduction de la taille du grand titre (Mangez sain...) */
+.hero-section h1 {
+    font-size: 2.2rem !important; /* Taille ajustée pour être plus équilibrée */
+}
+
+/* Réduction du sous-titre (Vos plats préférés...) */
+.hero-section .lead {
+    font-size: 1.1rem;
+}
+
 .hero-section {
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('assets/image/hero-bg.jpg') center/cover no-repeat;
     min-height: 70vh;

@@ -11,7 +11,10 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#">Vite & Gourmand</a>
+            <a class="navbar-brand d-flex align-items-center fw-bold" href="#">
+                <img src="assets/image/Logo Vite&Gourmand.png" alt="Logo Vite & Gourmand" style="height: 40px; width: auto; margin-right: 10px;">
+                Vite & Gourmand
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -42,8 +45,10 @@
         <div class="container">
             <h2 class="text-center fw-bold mb-5">Savoir-faire Gourmand</h2>
             <div class="row g-4 justify-content-center">
+                
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card h-100 shadow-sm border-0">
+                        <img src="assets/image/langoustines.jpg" class="card-img-top" alt="Entrée de Langoustines" style="height: 220px; object-fit: cover;">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">Entrée de Langoustines</h5>
                             <p class="card-text text-muted">Langoustines saisies, déclinaison de textures de carottes et émulsion acidulée.</p>
@@ -54,8 +59,10 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="card h-100 shadow-sm border-0">
+                        <img src="assets/image/agneau.jpg" class="card-img-top" alt="Plat d'Agneau" style="height: 220px; object-fit: cover;">
                         <div class="card-body">
                             <h5 class="card-title fw-bold">Plat d'Agneau</h5>
                             <p class="card-text text-muted">Quasi d'agneau rôti au thym, mousseline de panais et jus corsé réduit.</p>
@@ -66,6 +73,35 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="assets/image/plat-jour.jpg" class="card-img-top" alt="Plat du Jour" style="height: 220px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Suggestion du Chef</h5>
+                            <p class="card-text text-muted">Poisson de ligne selon arrivage, écrasé de pommes de terre aux herbes et beurre blanc.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="fw-bold text-success fs-5">22.00 €</span>
+                                <button class="btn btn-dark btn-sm px-3 add-to-cart">Ajouter</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="assets/image/chocolat.jpg" class="card-img-top" alt="Dessert Gourmand" style="height: 220px; object-fit: cover;">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Douceur Chocolat</h5>
+                            <p class="card-text text-muted">Entremets croustillant au chocolat noir intense, cœur coulant au caramel beurre salé.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="fw-bold text-success fs-5">9.50 €</span>
+                                <button class="btn btn-dark btn-sm px-3 add-to-cart">Ajouter</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -105,18 +141,37 @@
     <footer class="bg-dark text-white py-5">
         <div class="container">
             <div class="row g-4 text-center text-md-start">
-                <div class="col-12 col-md-6">
-                    <h5 class="fw-bold text-success">Vite & Gourmand</h5>
-                    <p class="text-muted small mb-0">Traiteur de confiance depuis 25 ans.</p>
+                <div class="col-12 col-md-4">
+                    <h5 class="fw-bold text-success mb-3">Vite & Gourmand</h5>
+                    <p class="text-muted small mb-2">Traiteur de confiance depuis 25 ans. Vos plats faits maison en un temps record.</p>
+                    <p class="text-light small mb-0">📞 05 56 78 90 12</p>
+                    <p class="text-light small">✉️ contact@vitegourmand.fr</p>
                 </div>
-                <div class="col-12 col-md-6 text-md-end">
-                    <h6 class="fw-bold">Horaires d'ouverture</h6>
-                    <p class="text-muted small mb-0">Du Lundi au Samedi : 11h00 - 22h00</p>
+                
+                <div class="col-12 col-md-4">
+                    <h6 class="fw-bold mb-3">Notre Restaurant</h6>
+                    <p class="text-muted small mb-1">Retrait des commandes & sur place :</p>
+                    <p class="text-light small">45 Rue Sainte-Catherine,<br>33000 Bordeaux</p>
+                </div>
+
+                <div class="col-12 col-md-4 text-md-end">
+                    <h6 class="fw-bold mb-3">Horaires d'ouverture</h6>
+                    <p class="text-muted small mb-1">Du Lundi au Samedi :</p>
+                    <p class="text-light small mb-3">11h00 - 14h30 / 18h00 - 22h00</p>
+                    <p class="text-muted small mb-0"><span class="badge bg-secondary">Fermé le Dimanche</span></p>
                 </div>
             </div>
+            
             <hr class="my-4 border-secondary">
-            <div class="text-center text-muted small">
-                &copy; 2026 Vite & Gourmand. Tous droits réservés.
+            
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center text-muted small">
+                <div class="mb-2 mb-md-0">
+                    &copy; 2026 Vite & Gourmand. Tous droits réservés.
+                </div>
+                <div>
+                    <a href="#" class="text-muted text-decoration-none me-3">Mentions légales</a>
+                    <a href="#" class="text-muted text-decoration-none">Allergènes</a>
+                </div>
             </div>
         </div>
     </footer>
