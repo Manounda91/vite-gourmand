@@ -1,3 +1,13 @@
+<?php
+require_once 'connexion.php';
+
+try {
+    $query = $pdo->query("SELECT * FROM plats");
+    $les_plats = $query->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $les_plats = [];
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -11,7 +21,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center fw-bold" href="#">
+            <a class="navbar-brand d-flex align-items-center fw-bold" href="index.php">
                 <img src="assets/image/Logo Vite&Gourmand.png" alt="Logo Vite & Gourmand" style="height: 40px; width: auto; margin-right: 10px;">
                 Vite & Gourmand
             </a>
@@ -20,11 +30,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
-                    <li class="nav-item"><a class="nav-link" href="#">Accueil</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Notre Carte</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Concept</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link btn btn-outline-success btn-sm text-white px-3 ms-2" href="#">🛒 <span id="cart-count">0</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.php">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#carte">Notre Carte</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#avis">Concept</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-outline-success btn-sm text-white px-3 ms-2" href="#carte">🛒 <span id="cart-count">0</span></a></li>
                 </ul>
             </div>
         </div>
@@ -35,78 +45,46 @@
             <h1 class="display-4 fw-bold">Mangez sain, mangez vite, soutenez local !</h1>
             <p class="lead">Vos plats préférés préparés avec amour et prêts en 10 minutes chrono.</p>
             <div class="d-flex flex-column flex-sm-row justify-content-center gap-3 mt-4">
-                <a href="#" class="btn btn-success btn-custom">Découvrir la carte & Commander</a>
-                <a href="#" class="btn btn-outline-light btn-custom">Réserver une Table</a>
+                <a href="#carte" class="btn btn-success btn-custom">Découvrir la carte & Commander</a>
+                <a href="#contact" class="btn btn-outline-light btn-custom">Réserver une Table</a>
             </div>
         </div>
     </header>
 
-    <section class="py-5 bg-light">
+    <section id="carte" class="py-5 bg-light">
         <div class="container">
             <h2 class="text-center fw-bold mb-5">Savoir-faire Gourmand</h2>
             <div class="row g-4 justify-content-center">
                 
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm border-0">
-                        <img src="assets/image/langoustines.jpg" class="card-img-top" alt="Entrée de Langoustines" style="height: 220px; object-fit: cover;">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Entrée de Langoustines</h5>
-                            <p class="card-text text-muted">Langoustines saisies, déclinaison de textures de carottes et émulsion acidulée.</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="fw-bold text-success fs-5">18.00 €</span>
-                                <button class="btn btn-dark btn-sm px-3 add-to-cart">Ajouter</button>
+                <?php if (!empty($les_plats)): ?>
+                    <?php foreach ($les_plats as $plat): ?>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card h-100 shadow-sm border-0">
+                                <img src="assets/image/<?php echo htmlspecialchars($plat['image']); ?>" class="card-img-top" alt="<?php echo htmlspecialchars($plat['nom']); ?>" style="height: 220px; object-fit: cover;">
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold"><?php echo htmlspecialchars($plat['nom']); ?></h5>
+                                    <p class="card-text text-muted"><?php echo htmlspecialchars($plat['description']); ?></p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <span class="fw-bold text-success fs-5">
+                                            <?php echo number_format($plat['prix'], 2, '.', ''); ?> €
+                                        </span>
+                                        <button class="btn btn-dark btn-sm px-3 add-to-cart">Ajouter</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="col-12 text-center">
+                        <p class="text-muted">Aucun plat n'est disponible pour le moment.</p>
                     </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm border-0">
-                        <img src="assets/image/agneau.jpg" class="card-img-top" alt="Plat d'Agneau" style="height: 220px; object-fit: cover;">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Plat d'Agneau</h5>
-                            <p class="card-text text-muted">Quasi d'agneau rôti au thym, mousseline de panais et jus corsé réduit.</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="fw-bold text-success fs-5">26.00 €</span>
-                                <button class="btn btn-dark btn-sm px-3 add-to-cart">Ajouter</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm border-0">
-                        <img src="assets/image/plat-jour.jpg" class="card-img-top" alt="Plat du Jour" style="height: 220px; object-fit: cover;">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Suggestion du Chef</h5>
-                            <p class="card-text text-muted">Poisson de ligne selon arrivage, écrasé de pommes de terre aux herbes et beurre blanc.</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="fw-bold text-success fs-5">22.00 €</span>
-                                <button class="btn btn-dark btn-sm px-3 add-to-cart">Ajouter</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm border-0">
-                        <img src="assets/image/chocolat.jpg" class="card-img-top" alt="Dessert Gourmand" style="height: 220px; object-fit: cover;">
-                        <div class="card-body">
-                            <h5 class="card-title fw-bold">Douceur Chocolat</h5>
-                            <p class="card-text text-muted">Entremets croustillant au chocolat noir intense, cœur coulant au caramel beurre salé.</p>
-                            <div class="d-flex justify-content-between align-items-center mt-3">
-                                <span class="fw-bold text-success fs-5">9.50 €</span>
-                                <button class="btn btn-dark btn-sm px-3 add-to-cart">Ajouter</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php endif; ?>
 
             </div>
         </div>
     </section>
 
-    <section class="py-5">
+    <section id="avis" class="py-5">
         <div class="container">
             <h2 class="text-center fw-bold mb-5">Avis de nos clients</h2>
             <div class="row g-4">
@@ -138,39 +116,40 @@
         </div>
     </section>
 
-    <footer class="bg-dark text-white py-5">
+    <footer id="contact" class="bg-dark text-white py-5">
         <div class="container">
             <div class="row g-4 text-center text-md-start">
                 <div class="col-12 col-md-4">
                     <h5 class="fw-bold text-success mb-3">Vite & Gourmand</h5>
-                    <p class="text-muted small mb-2">Traiteur de confiance depuis 25 ans. Vos plats faits maison en un temps record.</p>
-                    <p class="text-light small mb-0">📞 05 56 78 90 12</p>
-                    <p class="text-light small">✉️ contact@vitegourmand.fr</p>
+                    <p class="text-white-50 small mb-2">Traiteur de confiance depuis 25 ans. Vos plats faits maison en un temps record.</p>
+                    <p class="text-white small mb-2">📞 05 56 78 90 12</p>
+                    <p class="text-white small mb-0">✉️ contact@vitegourmand.fr</p>
                 </div>
                 
                 <div class="col-12 col-md-4">
-                    <h6 class="fw-bold mb-3">Notre Restaurant</h6>
-                    <p class="text-muted small mb-1">Retrait des commandes & sur place :</p>
-                    <p class="text-light small">45 Rue Sainte-Catherine,<br>33000 Bordeaux</p>
+                    <h6 class="fw-bold mb-3 text-white">Notre Restaurant</h6>
+                    <p class="text-white-50 small mb-1">Retrait des commandes & sur place :</p>
+                    <p class="text-white small">45 Rue Sainte-Catherine,<br>33000 Bordeaux</p>
                 </div>
 
                 <div class="col-12 col-md-4 text-md-end">
-                    <h6 class="fw-bold mb-3">Horaires d'ouverture</h6>
-                    <p class="text-muted small mb-1">Du Lundi au Samedi :</p>
-                    <p class="text-light small mb-3">11h00 - 14h30 / 18h00 - 22h00</p>
-                    <p class="text-muted small mb-0"><span class="badge bg-secondary">Fermé le Dimanche</span></p>
+                    <h6 class="fw-bold mb-3 text-white">Horaires d'ouverture</h6>
+                    <p class="text-white-50 small mb-1">Du Lundi au Samedi :</p>
+                    <p class="text-white small mb-3">11h00 - 14h30 / 18h00 - 22h00</p>
+                    <p class="mb-0"><span class="badge bg-secondary">Fermé le Dimanche</span></p>
                 </div>
             </div>
             
             <hr class="my-4 border-secondary">
             
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center text-muted small">
-                <div class="mb-2 mb-md-0">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center small">
+                <div class="mb-2 mb-md-0 text-white-50">
                     &copy; 2026 Vite & Gourmand. Tous droits réservés.
                 </div>
                 <div>
-                    <a href="#" class="text-muted text-decoration-none me-3">Mentions légales</a>
-                    <a href="#" class="text-muted text-decoration-none">Allergènes</a>
+                    <a href="#" style="color: #cbd5e1; text-decoration: none;" class="me-3">Mentions légales</a>
+                    <a href="#" style="color: #cbd5e1; text-decoration: none;" class="me-3">Allergènes</a>
+                    <a href="connexion.html" style="color: #f59e0b; text-decoration: none; font-weight: 500;">🔒 Espace Pro</a>
                 </div>
             </div>
         </div>

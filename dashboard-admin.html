@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vite & Gourmand - Dashboard Administrateur</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #fdfbf7; color: #2c2520; display: flex; min-height: 100vh; }
+        
+        .sidebar { width: 260px; background: #2c2520; color: white; padding: 30px 20px; flex-shrink: 0; display: flex; flex-direction: column; }
+        .sidebar h2 { font-size: 20px; margin-bottom: 30px; color: #d97706; text-align: center; }
+        .sidebar-menu { list-style: none; flex-grow: 1; }
+        .sidebar-menu li { padding: 12px 15px; margin-bottom: 8px; border-radius: 6px; cursor: pointer; transition: background 0.3s; display: flex; align-items: center; gap: 10px; }
+        .sidebar-menu li:hover, .sidebar-menu li.active { background: #d97706; }
+        .btn-logout { width: 100%; padding: 10px; background: #dc2626; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: auto; }
+        .btn-logout:hover { background: #b91c1c; }
+
+        .main-content { flex-grow: 1; padding: 40px; overflow-y: auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .badge { padding: 6px 14px; background: #fef3c7; color: #d97706; border-radius: 20px; font-weight: bold; font-size: 13px; border: 1px solid #fde68a; }
+        
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 20px; }
+        .card { background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 15px rgba(139, 92, 26, 0.05); border: 1px solid #e6d7be; margin-bottom: 20px; }
+        .card h3 { color: #2c2520; margin-bottom: 15px; font-size: 18px; border-bottom: 2px solid #f5f0e6; padding-bottom: 8px; }
+        
+        .pro-list { list-style: none; }
+        .pro-list li { padding: 10px 0; border-bottom: 1px dashed #e6d7be; display: flex; justify-content: space-between; font-size: 14px; }
+        .pro-list li:last-child { border-bottom: none; }
+        
+        .pro-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+        .pro-table th, .pro-table td { padding: 12px; text-align: left; border-bottom: 1px solid #e6d7be; }
+        .pro-table th { background: #f5f0e6; color: #4a3f35; font-weight: 600; }
+
+        .status { font-weight: bold; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+        .status.ok { background: #dcfce7; color: #16a34a; }
+        .status.wait { background: #fef3c7; color: #d97706; }
+        .status.alert { background: #fee2e2; color: #dc2626; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>Vite & Gourmand</h2>
+        <ul class="sidebar-menu">
+            <li class="menu-item active" data-target="tab-dashboard">📊 Tableau de bord</li>
+            <li class="menu-item" data-target="tab-events">📅 Réservations & Événements</li>
+            <li class="menu-item" data-target="tab-carte">🍳 Gestion de la Carte</li>
+            <li class="menu-item" data-target="tab-staff">👥 Gestion du Personnel</li>
+            <li class="menu-item" data-target="tab-settings">⚙️ Paramètres</li>
+            <li onclick="window.location.href='index.php'" style="background: #4b5563; margin-top: 20px; color: white;">🌐 Retour au Site</li>
+        </ul>
+        <button class="btn-logout" id="btnLogout">Se déconnecter</button>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div>
+                <h1>Espace Professionnel Administrateur</h1>
+                <p style="color: #8c7e74; margin-top: 5px;">Bienvenue, <span id="adminName">José</span></p>
+            </div>
+            <span class="badge">Session Active : Direction</span>
+        </div>
+
+        <div id="tab-dashboard" class="tab-content active">
+            <div class="dashboard-grid">
+                <div class="card">
+                    <h3>📅 Prochains Événements</h3>
+                    <ul class="pro-list">
+                        <li><span>Buffet Mariage - 45 pers.</span> <span class="status ok">Confirmé</span></li>
+                        <li><span>Séminaire Entreprise - 20 pers.</span> <span class="status wait">En attente</span></li>
+                        <li><span>Cocktail Anniversaire - 35 pers.</span> <span class="status ok">Confirmé</span></li>
+                        <li><span>Repas d'Association - 60 pers.</span> <span class="status wait">En attente</span></li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>👥 Personnel en Service</h3>
+                    <ul class="pro-list">
+                        <li><span>Amine (Cuisine)</span> <span style="color: #6b7280;">08h00 - 16h00</span></li>
+                        <li><span>Sarah (Salle)</span> <span style="color: #6b7280;">11h30 - 22h00</span></li>
+                        <li><span>Idriss (Cuisine)</span> <span style="color: #6b7280;">12h00 - 20h00</span></li>
+                        <li><span>Bamba (Livraison)</span> <span style="color: #6b7280;">18h00 - 23h00</span></li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>🛒 Alertes Réapprovisionnement</h3>
+                    <ul class="pro-list">
+                        <li><span>Produits Frais</span> <span class="status ok">Optimal</span></li>
+                        <li><span>Boissons & Vins</span> <span class="status alert">Stock Faible</span></li>
+                        <li><span>Épices & Condiments</span> <span class="status ok">Optimal</span></li>
+                        <li><span>Emballages de transport</span> <span class="status alert">À commander</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-events" class="tab-content">
+            <div class="card">
+                <h3>📅 Registre des Réservations Événementielles</h3>
+                <table class="pro-table">
+                    <thead>
+                        <tr>
+                            <th>Client / Événement</th>
+                            <th>Date & Heure</th>
+                            <th>Couverts</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>M. Touré - Anniversaire d'entreprise</td>
+                            <td>24/07/2026 - 20h00</td>
+                            <td>45</td>
+                            <td><span class="status ok">Confirmé</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mme Koffi - Buffet Familial</td>
+                            <td>28/07/2026 - 12h30</td>
+                            <td>20</td>
+                            <td><span class="status wait">En attente</span></td>
+                        </tr>
+                        <tr>
+                            <td>M. Konan - Cocktail Privé</td>
+                            <td>02/08/2026 - 19h00</td>
+                            <td>35</td>
+                            <td><span class="status ok">Confirmé</span></td>
+                        </tr>
+                        <tr>
+                            <td>Association KMCNVE - Gala Annuel</td>
+                            <td>12/08/2026 - 20h30</td>
+                            <td>60</td>
+                            <td><span class="status wait">En attente</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="tab-carte" class="tab-content">
+            <div class="card">
+                <h3>🍳 Menu & Plats du Jour</h3>
+                <table class="pro-table">
+                    <thead>
+                        <tr>
+                            <th>Nom du Plat</th>
+                            <th>Catégorie</th>
+                            <th>Prix Client</th>
+                            <th>Disponibilité</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Poulet Braisé Kédjénou</td>
+                            <td>Plat Principal</td>
+                            <td>14.50 €</td>
+                            <td><span class="status ok">En Stock</span></td>
+                        </tr>
+                        <tr>
+                            <td>Alloco Gourmand & Sauce Pimentée</td>
+                            <td>Entrée / Accompagnement</td>
+                            <td>6.00 €</td>
+                            <td><span class="status ok">En Stock</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mousse Légère aux Fruits Exotiques</td>
+                            <td>Dessert</td>
+                            <td>5.50 €</td>
+                            <td><span class="status alert">Épuisé</span></td>
+                        </tr>
+                        <tr>
+                            <td>Attiéké Poisson Grillé</td>
+                            <td>Plat Principal</td>
+                            <td>16.00 €</td>
+                            <td><span class="status ok">En Stock</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="tab-staff" class="tab-content">
+            <div class="card">
+                <h3>👥 Liste de l'Équipe & Plannings</h3>
+                <table class="pro-table">
+                    <thead>
+                        <tr>
+                            <th>Employé</th>
+                            <th>Rôle</th>
+                            <th>Poste de Travail</th>
+                            <th>Statut de Présence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Amine Koné</td>
+                            <td>Cuisinier</td>
+                            <td>Cuisine Centrale</td>
+                            <td><span class="status ok">Présent</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sarah Bamba</td>
+                            <td>Serveuse Référente</td>
+                            <td>Salle Principale</td>
+                            <td><span class="status ok">Présente</span></td>
+                        </tr>
+                        <tr>
+                            <td>Idriss Diomandé</td>
+                            <td>Second de Cuisine</td>
+                            <td>Cuisine Centrale</td>
+                            <td><span class="status ok">Présent</span></td>
+                        </tr>
+                        <tr>
+                            <td>Bamba Massandjé</td>
+                            <td>Livreuse Logistique</td>
+                            <td>Zone Externe</td>
+                            <td><span class="status ok">Présente</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mathieu Diallo</td>
+                            <td>Livreur</td>
+                            <td>Zone Logistique</td>
+                            <td><span class="status wait">Absent (Repos)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="tab-settings" class="tab-content">
+            <div class="card">
+                <h3>⚙️ Configuration de l'Établissement</h3>
+                <ul class="pro-list">
+                    <li><span>Nom du Restaurant</span> <strong>Vite & Gourmand</strong></li>
+                    <li><span>Horaires d'Ouverture</span> <span>7j/7 — 11h00 / 23h00</span></li>
+                    <li><span>Notifications SMS Clients</span> <span class="status ok">Activées</span></li>
+                    <li><span>Version du Système local</span> <span>v1.2.4 (XAMPP Node)</span></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const userRole = sessionStorage.getItem('user_role');
+        if (!userRole || userRole !== 'admin') {
+            alert("Accès refusé. Veuillez vous connecter.");
+            window.location.href = 'connexion.html';
+        }
+
+        const storedName = sessionStorage.getItem('user_name');
+        if (storedName) {
+            document.getElementById('adminName').textContent = storedName;
+        }
+
+        const menuItems = document.querySelectorAll('.menu-item');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                menuItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                tabContents.forEach(content => content.classList.remove('active'));
+                const targetId = item.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+
+        document.getElementById('btnLogout').addEventListener('click', function() {
+            sessionStorage.clear();
+            window.location.href = 'connexion.html';
+        });
+    </script>
+</body>
+</html>
